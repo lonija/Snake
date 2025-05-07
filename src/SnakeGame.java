@@ -64,19 +64,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void draw(Graphics g) {
-        // Grid
+       /*  // Grid
         for (int i = 0; i < boardWidth / tileSize; i++) {
             g.drawLine(i * tileSize, 0, i * tileSize, boardHeight);
             g.drawLine(0, i * tileSize, boardWidth, i * tileSize);
         }
-
+*/ 
         // Food
-
-        g.setColor(Color.yellow);
-        g.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+        g.drawImage(new ImageIcon("Apple-PNG.png").getImage(), food.x * tileSize, food.y * tileSize, tileSize, tileSize, null);
+      
 
         // Snake head
-        g.setColor(Color.MAGENTA);
+        g.setColor(Color.white);
         g.fillRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize);
 
         // Snake body
@@ -86,10 +85,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         // Score
-        g.setFont(new Font("Arial", Font.PLAIN, 16));
+        g.setFont(new Font("Arial", Font.PLAIN, 32));
         if (gameOver) {
+
             g.setColor(Color.red);
-            g.drawString("Game Over! Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+            g.drawString("Game Over! Score: " + String.valueOf(snakeBody.size()), tileSize, tileSize);
         }
         else {
             g.setColor(Color.white);
@@ -134,6 +134,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         //Game Over
         for (int i = 0; i < snakeBody.size(); i++){
             Tile snakePart = snakeBody.get(i);
+
             //Collide with the snake head
             if (collision(snakeHead, snakePart)){
                 gameOver = true;
@@ -143,8 +144,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if (snakeHead.x * tileSize < 0 || snakeHead.x * tileSize > boardWidth || snakeHead.y *tileSize < 0 || snakeHead.y * tileSize > boardHeight) {
             gameOver = true;
         }
-
     }
+        // A method used to reset the game
+// public void reset() {
+   // gameOver = false;}
+
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {
