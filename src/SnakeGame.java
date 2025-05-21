@@ -94,8 +94,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
             g.setColor(Color.white);
             g.setFont(new Font("Courier New", Font.PLAIN, 20));
-           // g.drawString("Press 'R' to play again", tileSize, tileSize * 2);
-           // g.drawString("Press 'ESC' to exit", tileSize, tileSize * 3);
+            g.drawString("Press 'R' to play again", tileSize, tileSize * 2);
+            g.drawString("Press 'ESC' to exit", tileSize, tileSize * 3);
         } else {
             g.setColor(Color.white);
             g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
@@ -140,8 +140,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         for (int i = 0; i < snakeBody.size(); i++) {
             Tile snakePart = snakeBody.get(i);
 
-            // Collide with the snake head
-            if (collision(snakeHead, snakePart)) {
+            if (collision(snakeHead, snakePart)) { // Collide with the snake head
                 gameOver = true;
             }
         }
@@ -151,9 +150,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             gameOver = true;
         }
     }
-    // A method used to reset the game
-    // public void reset() {
-    // gameOver = false;}
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -162,11 +158,20 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if (gameOver) {
             gameloop.stop();
         }
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        // Restart the game
+        if (e.getKeyCode() == KeyEvent.VK_R) {
+            restartGame();
+        }
+        // Exit the game
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+
+        // Change direction
         if (e.getKeyCode() == KeyEvent.VK_UP && velocityY != 1) {
             velocityX = 0;
             velocityY = -1;
@@ -182,6 +187,17 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    private void restartGame() {
+
+        snakeHead = new Tile(5, 5);
+        snakeBody = new ArrayList<Tile>();
+        placeFood();
+        velocityX = 0;
+        velocityY = 0;
+        gameOver = false;
+        gameloop.start();
+    }
+
     // don't need to implement this method, but it is required by the interface
     @Override
     public void keyTyped(KeyEvent e) {
@@ -190,5 +206,4 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
     }
-
 }
